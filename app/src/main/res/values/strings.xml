@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Chat Messenger</string>
+    <string name="content_description_Logo">Logo</string>
+    <string name="hint_name_login">Digite seu nome.</string>
+    <string name="DDI_Login">+55</string>
+    <string name="DDD_login">21</string>
+    <string name="butao_cadastrar_login">Cadastrar</string>
+    <string name="titulo_validacao">Validação</string>
+    <string name="texto_validacao">Você recebeu um SMS para validação do seu número, digite o código de validação abaixo:</string>
+    <string name="butao_validar">Validar</string>
+    <string name="hint_codigo_validar">Digite o código</string>
 </resources>
