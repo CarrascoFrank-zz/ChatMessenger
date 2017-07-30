@@ -8,9 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.chatmessenger.chatmessenger.R;
+import com.android.chatmessenger.chatmessenger.helper.Preferencias;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -71,7 +73,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 String token = String.valueOf(numeroRandomico);
 
-                Log.i("TOKEN", "T:" + token);
+                //salvando dados para validação
+                Preferencias preferencias = new Preferencias(getApplicationContext());
+
+                preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneSemFormatacao, token);
+
+                HashMap<String, String> usuario = preferencias.getDadosUsuarios(); //Salvando hashmap de preferencias com os dados do usuario no hassmap usuarios.
+
+                Log.i("TOKEN", "T:" + usuario.get("nome")+ usuario.get("telefone"));
             }
         });
 
