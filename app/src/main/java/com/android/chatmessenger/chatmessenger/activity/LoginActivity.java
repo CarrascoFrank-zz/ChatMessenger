@@ -2,6 +2,7 @@ package com.android.chatmessenger.chatmessenger.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -72,6 +73,12 @@ public class LoginActivity extends AppCompatActivity {
                 int numeroRandomico = randomico.nextInt(9999-1000)+1000; //forçado a geração de 4 digitos;
 
                 String token = String.valueOf(numeroRandomico);
+                String mensagemEnvio = "Chat Messenger Código de confirmação: " + token;
+
+                //envio do sms
+
+                enviaSMS("+" + telefoneSemFormatacao, mensagemEnvio);
+
 
                 //salvando dados para validação
                 Preferencias preferencias = new Preferencias(getApplicationContext());
@@ -84,5 +91,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //Metodo envio SMS
+    private boolean enviaSMS(String telefone, String mensagem){
+        try {
+
+            SmsManager smsManager = SmsManager.getDefault(); //recuperando a instacia da classe
+            smsManager.sendTextMessage(telefone,null, mensagem, null, null );
+
+            return true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }
