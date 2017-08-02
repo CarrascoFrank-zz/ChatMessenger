@@ -2,6 +2,7 @@ package com.android.chatmessenger.chatmessenger.activity;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.chatmessenger.chatmessenger.R;
 import com.android.chatmessenger.chatmessenger.helper.Permissao;
@@ -90,7 +92,18 @@ public class LoginActivity extends AppCompatActivity {
                 //envio do sms
 
                 enviaSMS("+" + telefoneSemFormatacao, mensagemEnvio);
+                boolean enviadoSMS = enviaSMS("+" + telefoneSemFormatacao, mensagemEnvio);
 
+                //caso seja enviado a mensagem usario vai para a seguinte activity
+                if(enviadoSMS)
+                {
+                    Intent intent = new Intent(LoginActivity.this, ValidadorActivity.class); // instanciando a activity para ir para a proxima
+                    startActivity(intent); //
+                    finish(); //destruindo a activity atual.
+
+                }else{
+                    Toast.makeText(LoginActivity.this, "Problema ao enviar o SMS tente novamente", Toast.LENGTH_LONG).show();
+                }
 
                 //salvando dados para validação
                 Preferencias preferencias = new Preferencias(getApplicationContext());
@@ -99,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 HashMap<String, String> usuario = preferencias.getDadosUsuarios(); //Salvando hashmap de preferencias com os dados do usuario no hassmap usuarios.
 
-                Log.i("TOKEN", "T:" + usuario.get("nome")+ usuario.get("telefone"));
+                Log.i("TOKEN", "T:" + usuario.get("token"));
             }
         });
 
