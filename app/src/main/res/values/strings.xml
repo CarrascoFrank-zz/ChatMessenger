@@ -9,4 +9,6 @@
     <string name="texto_validacao">Você recebeu um SMS para validação do seu número, digite o código de validação abaixo:</string>
     <string name="butao_validar">Validar</string>
     <string name="hint_codigo_validar">Digite o código</string>
+    <string name="botao_logar">Logar</string>
+    <string name="texto_cadastre">Não tem conta? Cadastra-se</string>
 </resources>
