@@ -20,7 +20,7 @@
 
     <EditText
         android:id="@+id/editText_cadastro_nome_id"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="43dp"
         android:ems="10"
         android:hint="Digite seu nome"
@@ -34,7 +34,7 @@
 
     <EditText
         android:id="@+id/editText_cadastro_email_id"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Digite seu e-mail"
@@ -50,7 +50,7 @@
 
     <EditText
         android:id="@+id/editText_cadastro_senha_id"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Digite sua senha"

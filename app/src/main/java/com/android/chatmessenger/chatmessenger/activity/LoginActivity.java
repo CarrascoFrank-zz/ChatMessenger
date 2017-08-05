@@ -15,10 +15,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.chatmessenger.chatmessenger.R;
+import com.android.chatmessenger.chatmessenger.config.ConfiguracaoFirebase;
 import com.android.chatmessenger.chatmessenger.helper.Permissao;
 import com.android.chatmessenger.chatmessenger.helper.Preferencias;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -26,13 +28,15 @@ import java.util.StringTokenizer;
 
 public class LoginActivity extends AppCompatActivity {
 
-
+    private DatabaseReference databaseReferenceFirebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        databaseReferenceFirebase = ConfiguracaoFirebase.getFirebase();
+        databaseReferenceFirebase.child("pontos").setValue("800");
 
 
         }
