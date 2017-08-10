@@ -16,6 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
@@ -69,8 +74,35 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Sucesso ao cadastrar usuario",Toast.LENGTH_LONG).show();
 
+                    FirebaseUser firebaseUser = task.getResult().getUser();
+                    usuario.setId(firebaseUser.getUid());
+                    usuario.salvar();
+
+                    firebaseAuth.signOut(); //deslogando o usuario apos o cadastrato
+
+                    finish();
+
                 }else{
-                    Toast.makeText(getApplicationContext(), "ERRO ao cadastrar usuario",Toast.LENGTH_LONG).show();
+
+                    String erroExcecao;
+
+                    try{
+
+                        throw task.getException(); //recuperando a exceção
+
+                    } catch (FirebaseAuthWeakPasswordException e) {
+                        erroExcecao = "Digite uma senha mais forte, contendo mais caracteres (numeros e letras)";
+                    }catch (FirebaseAuthInvalidCredentialsException e){
+                        erroExcecao = "O e-mail informado é invalido, Digite novamente.";
+                    }catch (FirebaseAuthUserCollisionException e){
+                        erroExcecao = "O e-email informado ja foi cadastrado, Tente usar outro e-mail";
+                    }catch (Exception e){
+                        erroExcecao = "Erro ao efetuar o cadastro";
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(getApplicationContext(), "ERRO: " + erroExcecao, Toast.LENGTH_LONG).show();
+
                 }
             }
         });

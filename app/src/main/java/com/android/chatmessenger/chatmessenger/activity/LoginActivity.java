@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         databaseReferenceFirebase = ConfiguracaoFirebase.getFirebase();
-        databaseReferenceFirebase.child("pontos").setValue("800");
+
 
 
         }

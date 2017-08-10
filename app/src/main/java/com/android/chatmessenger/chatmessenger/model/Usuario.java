@@ -1,5 +1,9 @@
 package com.android.chatmessenger.chatmessenger.model;
 
+import com.android.chatmessenger.chatmessenger.config.ConfiguracaoFirebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
 public class Usuario {
 
     private String id;
@@ -7,13 +11,19 @@ public class Usuario {
     private String email;
     private String senha;
 
-    //construtor
+    //construtor vazio para o firebase salvar o objeto corretamente.
     public Usuario(){
 
     }
 
+    public void salvar(){
+        DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
+        databaseReference.child("usuarios").child(getId()).setValue(this);
+    }
+
     //geters and setters
 
+    @Exclude //Anotação para nao salvar o id
     public String getId() {
         return id;
     }
@@ -37,7 +47,7 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @Exclude
     public String getSenha() {
         return senha;
     }
