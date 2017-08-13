@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Chat Messenger</string>
+
     <string name="content_description_Logo">Logo</string>
+    <string name="action_settings">Configurações</string>
+    <string name="item_sair">Sair</string>
+    <string name="item_pesquisa">Pesquisa</string>
+    <string name="item_adicionar">Adicionar</string>
     <string name="hint_name_login">Digite seu nome.</string>
     <string name="DDI_Login">+55</string>
     <string name="DDD_login">21</string>
