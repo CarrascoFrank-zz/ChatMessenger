@@ -8,6 +8,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colorSecondaryText</item>
+        <!--Personalizando o item de menu-->
+        <item name="android:itemBackground">@android:color/background_light</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
+
+    <style name="botaoPadrao" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@color/icons</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+</style>
 
 </resources>

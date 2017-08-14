@@ -43,7 +43,7 @@
         android:ems="10"
         android:hint="Digite seu e-mail"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/colorAccent"
+        android:textColorHint="@color/colorSecondaryText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -59,7 +59,7 @@
         android:ems="10"
         android:hint="Digite sua senha"
         android:inputType="textPassword"
-        android:textColorHint="@color/colorAccent"
+        android:textColorHint="@color/colorSecondaryText"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -71,12 +71,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/botao_logar"
-        android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_senha_id" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_senha_id"
+        app:theme="@style/botaoPadrao"
+        />
 
     <TextView
         android:id="@+id/textView"
@@ -85,7 +86,6 @@
         android:layout_marginTop="14dp"
         android:onClick="abrirCadastroUsuario"
         android:text="@string/texto_cadastre"
-        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_logar_id" />
