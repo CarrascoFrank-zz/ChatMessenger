@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.android.chatmessenger.chatmessenger.R;
 import com.android.chatmessenger.chatmessenger.config.ConfiguracaoFirebase;
+import com.android.chatmessenger.chatmessenger.helper.Base64Custom;
 import com.android.chatmessenger.chatmessenger.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -75,12 +77,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Sucesso ao cadastrar usuario",Toast.LENGTH_LONG).show();
 
                     FirebaseUser firebaseUser = task.getResult().getUser();
-                    usuario.setId(firebaseUser.getUid());
+
+                    String identificadorUsuario = Base64Custom.codificarBase64( usuario.getEmail());
+                    usuario.setId( identificadorUsuario );
                     usuario.salvar();
 
-                    firebaseAuth.signOut(); //deslogando o usuario apos o cadastrato
-
-                    finish();
+                    abrirLoginUsuario();
 
                 }else{
 
@@ -107,6 +109,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void abrirLoginUsuario(){
+        Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
