@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.android.chatmessenger.chatmessenger.R;
 import com.android.chatmessenger.chatmessenger.config.ConfiguracaoFirebase;
 import com.android.chatmessenger.chatmessenger.helper.Base64Custom;
+import com.android.chatmessenger.chatmessenger.helper.Preferencias;
 import com.android.chatmessenger.chatmessenger.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -81,6 +82,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     String identificadorUsuario = Base64Custom.codificarBase64( usuario.getEmail());
                     usuario.setId( identificadorUsuario );
                     usuario.salvar();
+
+                    //Salvando o email do usuario em preferencias quando realizar cadastros
+                    Preferencias preferencias = new Preferencias(CadastroUsuarioActivity.this);
+                    preferencias.salvarDados(identificadorUsuario);
 
                     abrirLoginUsuario();
 

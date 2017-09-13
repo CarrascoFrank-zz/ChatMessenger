@@ -12,9 +12,9 @@ public class Preferencias {
     private SharedPreferences preferences;
     private static final String NOME_ARQIVO = "chatmessenger.preferencias";
     private  static  final int MODE = 0;
-    private static final String CHAVE_NOME = "nome";
-    private  static  final String CHAVE_TELEFONE = "telefone";
-    private  static  final String CHAVE_TOKEN = "token";
+    private static final String CHAVE_IDENTIFICADOR = "identificadorUsuarioLogado";
+//    private  static  final String CHAVE_TELEFONE = "telefone";
+//    private  static  final String CHAVE_TOKEN = "token";
 
     private SharedPreferences.Editor editor;
 
@@ -29,22 +29,29 @@ public class Preferencias {
     }
 
     //salvando os dados do usuario no arquivo de preferencia.
-    public void salvarUsuarioPreferencias( String nome, String telefone, String token){
-        editor.putString(CHAVE_NOME, nome);
-        editor.putString(CHAVE_TELEFONE, telefone);
-        editor.putString(CHAVE_TOKEN, token);
+    public void salvarDados( String identificadorUsuario){
+        editor.putString(CHAVE_IDENTIFICADOR, identificadorUsuario);
+//        editor.putString(CHAVE_TELEFONE, telefone);
+//        editor.putString(CHAVE_TOKEN, token);
         editor.commit();
     }
 
-    //metodo para retornar as preferencias
-    public HashMap<String, String> getDadosUsuarios(){
-        HashMap<String, String> dadosUsuario = new HashMap<>(); //Lista com os dados em String
+//    //metodo para retornar as preferencias
+//    public HashMap<String, String> getDadosUsuarios(){
+//        HashMap<String, String> dadosUsuario = new HashMap<>(); //Lista com os dados em String
+//
+//        //defino a chave e com getString do preference chamo o valor prenchido no preference
+//        dadosUsuario.put(CHAVE_NOME, preferences.getString(CHAVE_NOME, null));
+//        dadosUsuario.put(CHAVE_TELEFONE, preferences.getString(CHAVE_TELEFONE, null));
+//        dadosUsuario.put(CHAVE_TOKEN, preferences.getString(CHAVE_TOKEN, null));
+//
+//        return dadosUsuario;
+//    }
 
-        //defino a chave e com getString do preference chamo o valor prenchido no preference
-        dadosUsuario.put(CHAVE_NOME, preferences.getString(CHAVE_NOME, null));
-        dadosUsuario.put(CHAVE_TELEFONE, preferences.getString(CHAVE_TELEFONE, null));
-        dadosUsuario.put(CHAVE_TOKEN, preferences.getString(CHAVE_TOKEN, null));
-
-        return dadosUsuario;
+    //metodo para recuoerar o identificador do usúario
+    public String getIdentificador(){
+        return preferences.getString(CHAVE_IDENTIFICADOR, null);
     }
+
+
 }

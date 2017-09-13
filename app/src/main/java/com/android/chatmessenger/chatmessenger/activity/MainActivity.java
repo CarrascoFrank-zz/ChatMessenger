@@ -2,6 +2,7 @@ package com.android.chatmessenger.chatmessenger.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ConfigurationInfo;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -14,14 +15,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.chatmessenger.chatmessenger.Adapter.TabAdapter;
 import com.android.chatmessenger.chatmessenger.R;
 import com.android.chatmessenger.chatmessenger.config.ConfiguracaoFirebase;
+import com.android.chatmessenger.chatmessenger.helper.Base64Custom;
+import com.android.chatmessenger.chatmessenger.helper.Preferencias;
 import com.android.chatmessenger.chatmessenger.helper.SlidingTabLayout;
+import com.android.chatmessenger.chatmessenger.model.Contato;
+import com.android.chatmessenger.chatmessenger.model.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 
@@ -32,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbarMainActivity;
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
-
+    private String identificadorContato;
+    private DatabaseReference databaseReferenceFirebase;
 
 
 
@@ -104,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setMessage("E-mail do usuário");
         alertDialog.setCancelable(false);
 
-        EditText editTextDialog = new EditText(MainActivity.this);
+        final EditText editTextDialog = new EditText(MainActivity.this);
 
         alertDialog.setView( editTextDialog );
 
@@ -114,6 +124,59 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //evento ao adicionar
+
+                String emailContato = editTextDialog.getText().toString();
+
+                if ( emailContato.isEmpty() ){
+                    Toast.makeText(getApplicationContext(),"Campo E-mail vazio", Toast.LENGTH_LONG).show();
+                }else{
+                    //verificar se o usuario consultado esta cadastrado.
+                    identificadorContato = Base64Custom.codificarBase64(emailContato);
+
+                    //recuperar a instacia do banco
+                    databaseReferenceFirebase = ConfiguracaoFirebase.getFirebase();
+                    databaseReferenceFirebase = databaseReferenceFirebase.child("usuarios").child(identificadorContato);
+
+                    databaseReferenceFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if ( dataSnapshot.getValue() != null){
+
+                                //recuperand dados do contato a ser adicionado
+                               Usuario usuarioContato =  dataSnapshot.getValue(Usuario.class);
+
+
+                                //recuperando identificacao do usuario logado
+                                Preferencias preferencias = new Preferencias(getApplicationContext());
+                                String identificadorUsuarioLogado = preferencias.getIdentificador();
+
+
+//                                firebaseAuth.getCurrentUser().getEmail();
+                                databaseReferenceFirebase = ConfiguracaoFirebase.getFirebase();
+                                databaseReferenceFirebase = databaseReferenceFirebase
+                                        .child("contatos")
+                                        .child(identificadorUsuarioLogado)
+                                        .child(identificadorContato);
+
+
+                                Contato contato = new Contato();
+                                contato.setIdentificadorUsuario(identificadorContato);
+                                contato.setEmail(usuarioContato.getEmail());
+                                contato.setNome(usuarioContato.getNome());
+
+                                databaseReferenceFirebase.setValue(contato);
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Contato não encontrado", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
 
             }
         });

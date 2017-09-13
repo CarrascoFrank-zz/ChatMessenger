@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.chatmessenger.chatmessenger.R;
 import com.android.chatmessenger.chatmessenger.config.ConfiguracaoFirebase;
+import com.android.chatmessenger.chatmessenger.helper.Base64Custom;
 import com.android.chatmessenger.chatmessenger.helper.Permissao;
 import com.android.chatmessenger.chatmessenger.helper.Preferencias;
 import com.android.chatmessenger.chatmessenger.model.Usuario;
@@ -66,8 +67,14 @@ public class LoginActivity extends AppCompatActivity {
                     usuario.setEmail(editTextEmail.getText().toString());
                     usuario.setSenha(editTextSenha.getText().toString());
 
-                    validarLogin();
+                    if ( (usuario.getEmail().isEmpty()) || (usuario.getSenha().isEmpty()) ){
 
+                        Toast.makeText(getApplicationContext(), "Digite um e-mail e uma senha", Toast.LENGTH_LONG).show();
+
+                    }else {
+
+                        validarLogin();
+                    }
 
                 }
             });
@@ -109,6 +116,10 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
+
+                        Preferencias preferencias = new Preferencias(LoginActivity.this);
+                        String identificadorUsuarioLogado = Base64Custom.codificarBase64(usuario.getEmail());
+                        preferencias.salvarDados(identificadorUsuarioLogado);
 
                         abrirActivityPrincipal();
 
