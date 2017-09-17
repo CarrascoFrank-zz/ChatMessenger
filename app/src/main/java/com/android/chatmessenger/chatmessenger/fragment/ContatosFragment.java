@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.chatmessenger.chatmessenger.Adapter.ContatoAdapter;
 import com.android.chatmessenger.chatmessenger.R;
 import com.android.chatmessenger.chatmessenger.config.ConfiguracaoFirebase;
 import com.android.chatmessenger.chatmessenger.helper.Preferencias;
@@ -31,7 +32,7 @@ public class ContatosFragment extends Fragment {
 
     private ListView listView;
     private ArrayAdapter adapter;
-    private ArrayList<String> contatos;
+    private ArrayList<Contato> contatos;
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListenerContatos;
 
@@ -63,12 +64,13 @@ public class ContatosFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contatos, container, false);
 
         listView = (ListView)  view.findViewById(R.id.lv_contatos_id);
-        adapter = new ArrayAdapter(
-                getActivity(), //pegando a activity
-                R.layout.lista_contato, //definindo Layout
-                contatos //defindo o conteudo
-        );
+//        adapter = new ArrayAdapter(
+//                getActivity(), //pegando a activity
+//                R.layout.lista_contato, //definindo Layout
+//                contatos //defindo o conteudo
+//        );
 
+        adapter = new ContatoAdapter(getActivity(), contatos);
         listView.setAdapter(adapter);
 
         //recuperando contatos no firebase]
@@ -90,7 +92,7 @@ public class ContatosFragment extends Fragment {
                 //listando contatos
                 for(DataSnapshot dados: dataSnapshot.getChildren()){
                     Contato contato = dados.getValue(Contato.class); //criando objeto baseado na classe contato
-                    contatos.add(contato.getNome());
+                    contatos.add(contato);
                 }
 
                 adapter.notifyDataSetChanged();
